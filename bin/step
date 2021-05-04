@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT=${PROJECT:-${WORKSPACE}}
+CONTEXT=${CONTEXT:-${PROJECT}}
+
+echo "➜  Committing modifications within: '${CONTEXT}'"
+echo "➜  ..."
+
+git add ${CONTEXT}
+git duet-commit "$@"
