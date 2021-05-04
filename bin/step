@@ -4,8 +4,26 @@ set -euo pipefail
 PROJECT=${PROJECT:-${WORKSPACE}}
 CONTEXT=${CONTEXT:-${PROJECT}}
 
-echo "➜  Committing modifications within: '${CONTEXT}'"
+echo "➜  \`step\` - committing modifications within: '${CONTEXT}'"
 echo "➜  ..."
 
 git add ${CONTEXT}
-git duet-commit "$@"
+
+if [[ "$@" == "" ]] ; then
+  journal=$(
+    git diff --staged -- doc/JOURNAL.md \
+    | grep -e '^\+' \
+    | grep -v '+++' \
+    | sed 's/^\+//g'
+  )
+  echo "➜  with journal:"
+  message="step ➜
+
+$journal
+"
+
+  echo "$message"
+  git duet-commit -m "$message"
+else
+  git duet-commit "$@"
+fi
