@@ -1,22 +1,23 @@
-## Story: Fix typo in `story`
+## Story: Demonstrate `${PROJECT}` usage
 
 ### Overview
 
-There was an erroneous `#` at the start of the commit message body.
+Given the existence of mulitple projects within the workspace, we'd like to have project-aware context. The `direnv` helper, `expand_path` assists.
 
 ### Acceptance
 
-`git show` last commit and do **not** see something like the following in the commit message:
+```shell
+$ cd ${WORKSPACE}/src/github.com/<org>/<project A>
+$ echo ${PROJECT} # matches directory path to project A
 
-```
-# ## Story: ...
+$ cd ${WORKSPACE}/src/github.com/<org>/<project B>
+$ echo ${PROJECT} # matches directory path to project B
+
+$ cd ${WORKSPACE}
+$ echo ${PROJECT:-undefined} # prints "undefined"
 ```
 
-Instead, see something like:
 
-```
-## Story: ...
-```
 
 ### Comments
 
