@@ -1,4 +1,4 @@
-## Story: [fix] Commit missing updates
+## Story: [fix] Commit missing updates (2/2)
 
 ### Overview
 
@@ -8,18 +8,18 @@ For the last couple or few stories, commits were made within a "project", but th
 
 ```shell
 # since we're still in $PROJECT_A, let's try...
-$ git ls-files | wc -l # -> 2
+$ git ls-files -m ${WORKSPACE} | wc -l # -> 2
 $ CONTEXT=$WORKSPACE story
 
 # ...and see that the workspace-level files are committed
-$ git ls-files | wc -l # -> 0
+$ git ls-files -m ${WORKSPACE} | wc -l # -> 0
 ```
 
 
 
 ### Comments
 
-Generally speaking, the idea is that this project/context scoping will be natural, and one would not *typically* be modifying workspace-scoped config and project-scoped config in the same story/effort/commit. We'll see how well that holds.
+Part 2 of 2: fixes the `git ls-files` parameters.
 
 ### References
 
