@@ -1,10 +1,10 @@
-## Story: Commit changes with `bin/story` (1/2)
+## Story: Commit changes with `bin/story` (2/2)
 
 ### Overview
 
 A `bin/story` executable, made available for the entire workspace, commits any changes to this very same `STORY.md` file, as well as all other modifications within `${CONTEXT}`.
 
-This story is split into two parts, in order to cover both command executions in the acceptance. This is part 1 of 2.
+This story is split into two parts, in order to cover both command executions in the acceptance. This is part 2 of 2.
 
 ### Acceptance
 
@@ -17,7 +17,7 @@ This story is split into two parts, in order to cover both command executions in
 $ CONTEXT=${WORKSPACE}/bin story
 
 # This commits the changes within `src`, and `STORY.md`
-$ CONTEXT=${WORKSPACE}/bin story
+$ CONTEXT=${WORKSPACE}/src story
 ```
 
 ### Comments
