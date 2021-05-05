@@ -1,4 +1,4 @@
-## Story: `PATH_add bin` inheritance & additions (1/2)
+## Story: `PATH_add bin` inheritance & additions (2/2)
 
 ### Overview
 
