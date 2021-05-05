@@ -1,15 +1,8 @@
 # Journal
 
-Currently working out how to keep a lightweight, "step"-wise approach to capturing changes in chunks, while making some way of collecting notes about the change "step".
+The next thing is probably to create a [README](../README.md) with some description about this workspace/project.
 
-This "journal" mechanism might help.
+**Notes:**
 
-Some usage notes for `step`:
-
-```shell
-# commit a "step" with a commit generated from any *additions* to the Journal:
-$ step
-
-# commit a "step" passing arguments through to git without the auto-message:
-$ step <args to git duet-commit>
-```
+- In general, avoid using Markdown headings in this file. The leading `#` will be treated as the start of a comment in the git commit message and that heading will be dropped.
+- As I write the "code" in VS Code and "docs" in Typora, I'm delighted (and a little surprised) to find that they both sync file system updates quite well. That is, changes made in one of the editors show up quickly in the other, on save.
