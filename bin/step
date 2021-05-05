@@ -3,6 +3,7 @@ set -euo pipefail
 
 PROJECT=${PROJECT:-${WORKSPACE}}
 CONTEXT=${CONTEXT:-${PROJECT}}
+VERBOSE=${VERBOSE:-0}
 
 echo "➜  \`step\` - committing modifications within: '${CONTEXT}'"
 echo "➜  ..."
@@ -16,13 +17,17 @@ if [[ "$@" == "" ]] ; then
     | grep -v '+++' \
     | sed 's/^\+//g'
   )
-  echo "➜  with journal:"
+
   message="step ➜
 
 $journal
 "
 
-  echo "$message"
+  if [[ "$VERBOSE" != "0" ]] ; then
+    echo "➜  with journal:"
+    echo "$message"
+  fi
+
   git duet-commit -m "$message"
 else
   git duet-commit "$@"
