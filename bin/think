@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "cogito, ergo sum"
+: ${MESSAGE:?error: MESSAGE must be set}
+
+echo "message: ${MESSAGE}"
