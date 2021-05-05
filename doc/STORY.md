@@ -1,20 +1,13 @@
-## Story: Demonstrate `${PROJECT}` usage
+## Story: Remove `step`
 
 ### Overview
 
-Given the existence of mulitple projects within the workspace, we'd like to have project-aware context. The `direnv` helper, `expand_path` assists.
+This `story` approach is much nicer.
 
 ### Acceptance
 
 ```shell
-$ cd ${WORKSPACE}/src/github.com/<org>/<project A>
-$ echo ${PROJECT} # matches directory path to project A
-
-$ cd ${WORKSPACE}/src/github.com/<org>/<project B>
-$ echo ${PROJECT} # matches directory path to project B
-
-$ cd ${WORKSPACE}
-$ echo ${PROJECT:-undefined} # prints "undefined"
+$ ls ${WORKSPACE}/bin/step # No such file or directory
 ```
 
 
