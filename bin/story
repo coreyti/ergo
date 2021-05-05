@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT=${PROJECT:-${WORKSPACE}}
+CONTEXT=${CONTEXT:-${PROJECT}}
+VERBOSE=${VERBOSE:-0}
+
+story=${WORKSPACE}/doc/STORY.md
+
+function content() {
+  cat ${story} | fold -w 72 -s
+}
+
+function heading() {
+  head -n 1 ${story} \
+  | sed 's/^.*Story: //' \
+  | sed 's/^\+/ /g'
+}
+
+function review() {
+  echo
+  echo "➜  "
+  echo "$(content | sed 's/^/   /')"
+  echo "---"
+  echo
+}
+
+function proceed() {
+  git add ${WORKSPACE}/doc/STORY.md
+  git add ${CONTEXT}
+  git duet-commit -m "$(heading)
+
+# $(content)"
+}
+
+function prompt() {
+  echo "➜  Continue? (pick a number)"
+  select answer in "yes" "no" "review"; do
+    case $answer in
+      yes)
+        proceed
+        break
+        ;;
+      no)
+        exit 0
+        ;;
+      review)
+        review
+        prompt
+        break
+        ;;
+    esac
+  done
+}
+
+function _main_() {
+  if [[ "$@" == "" || "$@" == "-y" ]] ; then
+    echo "➜  Finishing Story"
+    echo "     - heading: \"$(heading)\""
+    echo "     - context: \"${CONTEXT}\""
+
+    if [[ "$@" == "-y" ]] ; then
+      proceed
+    else
+      prompt
+    fi
+  else
+    echo 'ERROR: `story` does not take any arguments'
+    exit 1
+  fi
+}
+
+_main_ "$@"
