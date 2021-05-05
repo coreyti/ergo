@@ -10,11 +10,29 @@ Note that it's is not actually the case that git will strip everything prefixed 
 
 ### Description
 
-I should be able to commit via `step` (no arguments) without losing blank lines in the generated commit message.
+I'd like to demonstrate some of the nice features of  `direnv` when used in nested filesystem structures. I'm currently hung up a bit on whether or not I'm actually building some sort of "monorepo", or a workspace containing multiple repos. The latter requires, either, that `src` is ignored from git commits, or that I use git submodules or similar. The first solution is a bit of a turn off because of the way VS Code handles `gitignore` paths (in its search and explorer), the second is because of, well, git submodules.
 
 ### Acceptance
 
-Check the commit message to confirm that there are (or, sadly, still are not) blank lines following the headings in this very same commit.
+`src/github.com/<org>/<project>` exists under the following conditions:
+
+- without the use of git submodules
+- without a `<project>/.git` folder, unless that is deemed to be fine given...
+- `$WORKSPACE/src` is not git-ignored.
+
+...and, there exists a `.envrc` in the nested project(s) to demostrate `direnv` features.
+
+### Implementation
+
+[`git-subrepo`](https://github.com/ingydotnet/git-subrepo) looks somewhat promising.
+
+### Comments
+
+- It's important (for me) to remember that this monorepo, and even multi-root, part of the experiment is not central to the `dotenv` (et al) demonstration I'm currently working toward.
+
+## Note
+
+I'm actually going to commit this `step` without any implementation at all. I've decided that I want to rework this step+journal concept as a "story" instead, and will move the above into my first story implementation.
 
 ## Usage
 
