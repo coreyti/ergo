@@ -1,25 +1,43 @@
-## Story: [fix] Commit missing updates (2/2)
+## Story: Demonstrate `source_up` Halting
 
 ### Overview
 
-For the last couple or few stories, commits were made within a "project", but there were "workspace" changes as well. Those were not committed because of the "context" notion in `story` (and this workspace idea overall). So, this is a fix to add those changes.
+So far, we've seen `source_up` used with a chain of 2 `.envrc` files. Here, we'll show that a `.envrc` in the middle can break the chanin, which may or may not be desirable. In this demonstration, we'll use a location that is effectively equivalent to a GitHub "user" or "organization", which is a reasonable use case, and that `.envrc` will **not** include `source_up`.
 
 ### Acceptance
 
 ```shell
-# since we're still in $PROJECT_A, let's try...
-$ git ls-files -m ${WORKSPACE} | wc -l # -> 2
-$ CONTEXT=$WORKSPACE story
+$ cd ~/Workspaces/ergo
+$ echo $WORKSPACE 
+# -> /Users/corey/Workspaces/ergo
 
-# ...and see that the workspace-level files are committed
-$ git ls-files -m ${WORKSPACE} | wc -l # -> 0
+$ echo $ORGANIZATION
+# ->
+
+$ cd $PROJECT_A
+$ echo $ORGANIZATION 
+# -> /Users/corey/Workspaces/ergo/src/github.com/coreyti
+$ echo $PROJECT     
+# -> /Users/corey/Workspaces/ergo/src/github.com/coreyti/ergo-api
+$ echo $WORKSPACE
+# -> 
 ```
 
 
 
 ### Comments
 
-Part 2 of 2: fixes the `git ls-files` parameters.
+Ah! And, as an example of why the `source_up` chain should probably **not** be broken:
+
+```shell
+$ pwd
+# -> /Users/corey/Workspaces/ergo/src/github.com/coreyti/ergo-api
+
+$ story
+# -> zsh: command not found: story
+```
+
+
 
 ### References
 
