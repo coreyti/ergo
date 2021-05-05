@@ -30,7 +30,7 @@ function proceed() {
   git add ${CONTEXT}
   git duet-commit -m "$(heading)
 
-# $(content)"
+$(content)"
 }
 
 function prompt() {
