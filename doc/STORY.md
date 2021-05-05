@@ -1,33 +1,42 @@
-## Story: `PATH_add bin` inheritance & additions (2/2)
+## Story: Use `source_env_if_exists` for Secrets and Such
 
 ### Overview
 
-In conjunction with `source_up`, `PATH_add` provides a nice mechanism for augmenting and modifying available executables. This, for example, could be a nice way to have tool conventions across projects, with workspace-level defaults.
+The `source_env_if_exists` is a nice mechanism for providing addtional settings, conditional on a `direnv` context file existing. This can be very useful for defining:
+
+- overrides
+- secrets
+- personal preferences
+
+It's (**VALIDATE THIS**) also possible to use this mechanism, along with shell parameter expansion, to provide a sort of "schema" for required `ENV`.
 
 ### Acceptance
 
 ```shell
-$ cd ${WORKSPACE}
-$ think 					# cogito, ergo sum
+: ${MESSAGE:?error: MESSAGE must be set}
 
-$ cd ${PROJECT_A}
-$ think 					# je pense, donc je suis
+# before adding "local" ENV settings:
+$ cd $PROJECT_A
+# prints direnv log info, including:
+# ./.envrc:10: SECRET_KEY: must be defined in ".local/envrc"
+$ echo $OVERRIDEN
+# should be "from project A", but fails because of the error above.
 
-$ cd ${PROJECT_B}
-$ think 					# some philosophy stuff
-
-$ cd ${PROJECT_C}
-$ think 					# cogito, ergo sum (no project-defined `think` executable)
+# after adding those settings:
+$ cd $PROJECT_A
+$ echo $OVERRIDEN 
+# -> from project A (local override)
+$ echo $SECRET_KEY 
+# -> have you heard of https://www.dinopass.com
 ```
 
-...also, the  `story` executable has `${PROJECT}` as a context default. So, this story becomes 2:
 
-- 1/2 will use `story` from within `${PROJECT_A}`, and should commit the content therein as well as this story specification, without committing the other projects.
-- 2/2 will use `story` from `${WORKSPACE}` in order to commit the other projects, as well as the `.envrc` at the workspace root.
 
 ### Comments
 
-...
+There a 2 or 3 separate considerations wrapped up in this story. The "overrides" for context-specific settings and personal preferences are clearly useful. The usage of shell parameter expansion within `.envrc` as a hook to enforce a sort of `ENV` "schema" is worth debate. A nice effect of this approach is that there is no need to commit `*.sample` files to fulfill that purpose.
+
+It's worth noting that this combination of `source_up` and `source_env_if_exists`, at multiple levels, brings a sort of inheritance and override protocol that is somewhat brittle if the respective files are not constructed with care.
 
 ### References
 
