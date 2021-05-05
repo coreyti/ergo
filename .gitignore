@@ -1,4 +1,5 @@
 .local
 .vscode
 
+Brewfile.lock.json
 node_modules
