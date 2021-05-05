@@ -1,34 +1,60 @@
-## Story: Commit changes with `bin/story` (2/2)
+## Story: Demonstrate `direnv: source_up`
 
 ### Overview
 
-A `bin/story` executable, made available for the entire workspace, commits any changes to this very same `STORY.md` file, as well as all other modifications within `${CONTEXT}`.
-
-This story is split into two parts, in order to cover both command executions in the acceptance. This is part 2 of 2.
+The `direnv stdlib` provides[^1] a `source_up` helper, which traverses "up" the filesystem tree in search of additional `.envrc` files. This can be used to provide settings for cross-project (e.g, workspace-scoped) configuration and tools, and a sort of defaults/overrides mechanism.
 
 ### Acceptance
 
 ```shell
-# given modifications within:
-# - ${WORKSPACE}/bin
-# - ${WORKSPACE}/src
+# given some ENV set in:
+# - ${WORKSPACE}/.envrc
+# - ${WORKSPACE}/src/github.com/<org>/<project A>/.envrc
+# - ${WORKSPACE}/src/github.com/<org>/<project B>/.envrc
+# and, assuming `direnv allow`
 
-# This commits the changes within `bin`, and `STORY.md`
-$ CONTEXT=${WORKSPACE}/bin story
+# when context is ${WORKSPACE}
+$ cd ${WORKSPACE}
+$ test "${PRESERVED}" = "from workspace" || echo "fail!"
+$ test "${OVERRIDEN}" = "from workspace" || echo "fail!"
 
-# This commits the changes within `src`, and `STORY.md`
-$ CONTEXT=${WORKSPACE}/src story
+# when context is ${WORKSPACE}/src
+$ cd ${WORKSPACE}/src
+$ test "${PRESERVED}" = "from workspace" || echo "fail!"
+$ test "${OVERRIDEN}" = "from workspace" || echo "fail!"
+
+# when context is ${WORKSPACE}/src/github.com/<org>
+$ cd ${WORKSPACE}/src/github.com/coreyti
+$ test "${PRESERVED}" = "from workspace" || echo "fail!"
+$ test "${OVERRIDEN}" = "from workspace" || echo "fail!"
+
+# when context is ${WORKSPACE}/src/github.com/<org>/<project A>
+$ cd ${WORKSPACE}/src/github.com/coreyti/ergo-api
+$ test "${PRESERVED}" = "from workspace" || echo "fail!"
+$ test "${OVERRIDEN}" = "from project A" || echo "fail!"
+
+# when context is ${WORKSPACE}/src/github.com/<org>/<project B>
+$ cd ${WORKSPACE}/src/github.com/coreyti/ergo-cli
+$ test "${PRESERVED}" = "from workspace" || echo "fail!"
+$ test "${OVERRIDEN}" = "from project B" || echo "fail!"
+
 ```
 
 ### Comments
 
-- Take a look at `${WORKSPACE}/bin/story` to get an idea of what is meant by "`${CONTEXT}`" above.
+- Note that:
+
+  > the other `.envrc` is not checked by the security framework
+
+- Also, it's not clear whether traversal halts at the first location. That'll be good to check in a follow-on story.
 
 ### References
 
-[placeholder]
+- https://direnv.net/man/direnv-stdlib.1.html#codesourceup-ltfilenamegtcode
 
 ### Footnotes
 
-[placeholder]
+[^1]: https://direnv.net/man/direnv-stdlib.1.html
+
+
 
