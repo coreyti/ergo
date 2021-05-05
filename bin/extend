@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# NOTE:
+# At the very end of `direnv stdlib`, there is:
+#   > # load direnv libraries
+# which will `source` anything found as ${config}/libs/*.sh
+
+config="${DIRENV_CONFIG:-$HOME/.config/direnv}"
+
+main() {
+  echo "Installing direnv extentions to ${config}"
+  install
+}
+
+install() {
+  local IFS=$'\n'
+  local source="${WORKSPACE}/lib/direnv"
+  local target="${config}/lib"
+
+  mkdir -p ${target}
+
+  for lib in $(ls -1 ${source}) ; do
+    echo "  ➜ ${lib}"
+  done
+
+  cp ${source}/*.sh ${target}
+}
+
+main

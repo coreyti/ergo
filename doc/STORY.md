@@ -1,43 +1,34 @@
-## Story: Adding `asdf-direnv`
+## Story: Extending `direnv` with Custom Libs
 
 ### Overview
 
-...
+For some set of workspace-wide (or, workstation-wide?) utilities, it would be nice to have those available as helpers utilized within `.envrc` contexts, rather than as executables. In this example, we'll add a `missing_secrets` extension that can be used to check placeholder `ENV` keys against what are actually specified in "local".
 
 ### Acceptance
 
 ```shell
-# before installing/configuring `asdf-direnv`...
-$ hyperfine 'iex --version'
-# ->
-# Benchmark #1: iex --version
-#   Time (mean ± σ):     418.2 ms ±   4.9 ms    [User: 358.3 ms, System: 251.6 ms]
-#   Range (min … max):   412.9 ms … 428.8 ms    10 runs
+$ cd ${WORKSPACE}
+$ extend # copy all `lib/direnv/*.sh` to the `direnv` library folder
 
-# and, after...
-$ hyperfine 'iex --version'
-# ->
-# Benchmark #1: iex --version
-#   Time (mean ± σ):     143.4 ms ±   2.2 ms    [User: 223.8 ms, System: 57.8 ms]
-#   Range (min … max):   140.4 ms … 147.5 ms    20 runs
+$ echo "missing_secrets" >> ${PROJECT_A}/.envrc
+$ cd ${PROJECT_A}
+$ direnv allow
+# -> direnv: checking for missing 'secrets' in: .local/envrc
+#    direnv:   ➜ SECRET_VAL is missing
+
 ```
 
-So, there's a ~3x speed improvement to running `iex --version` with `asdf-direnv` installed.
 
-It's also worth noting that:
-
-- Once the tool is properly set up, all of our previous examples of `direnv` usage appear to work as expected and as before.
-- When `direnv` context changes (joining and leaving directories), there is now a **lot** of log output. That can be silenced via `export DIRENV_LOG_FORMAT=""`. However, I don't think it would be a good idea to silence the logging altogether. 
 
 ### Comments
 
-I first installed [`hyperfine`](https://github.com/sharkdp/hyperfine), which is used to perform the benchmarking. And, since `hyperfine` is available as a Homebrew package, I introduce the `Brewfile` in this story. There is also now a `bb` executable included as a helper to run `brew bundle --file ${WORKSPACE}/Brewfile`.
-
-**Important:** The [setup instructions](https://github.com/asdf-community/asdf-direnv) for `asdf-direnv` include instructions to install `direnv 2.20.0`. However, that version does not include the `source_env_if_exists` command, which we use in the workspace. It took a bit of hoop-jumping to figure this out and correct things. Otherwise, `asdf-direnv` appears to work great. And, in keeping with usage of `asdf` as one of our package version managers, there is now a `${WORKSPACE}/.tool-versions` file.
+- The path for the "local" `ENV` can be specified: `missing_secrets .envrc.private`.
+- This commit also includes a dump of `direnv stdlib`, for ready availability.
+- Some care needs to be taken when adding `direnv` extensions. When I first did so, something about my original implementation (perhaps the `set -euo pipefail`) cause `direnv` to partially and somewhat silently break.
 
 ### References
 
-...
+- [`DIRENV-STDLIB`](https://direnv.net/man/direnv-stdlib.1.html)
 
 ### Footnotes
 
