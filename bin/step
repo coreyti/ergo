@@ -15,7 +15,7 @@ if [[ "$@" == "" ]] ; then
     git diff --staged -- doc/JOURNAL.md \
     | grep -e '^\+' \
     | grep -v '+++' \
-    | sed 's/^\+//g'
+    | sed 's/^\+/ /g'
   )
 
   message="step ➜
