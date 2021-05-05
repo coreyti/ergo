@@ -4,6 +4,8 @@
 
 This "journal" is an experiment into capturing thoughts, usage, etc. related to step-wise commits along with the commit. Much of the content should be updated to match each commit. Some of the content will persist across some number of commits.
 
+Note that it's is not actually the case that git will strip everything prefixed with `#` from commit messages. It appears to only do so for *single* `#` lines. So, `##` and the like can in fact be used in this journal without being lost in the commit messages.
+
 ## Usage
 
 There's no usage to add in this commit. This "usage" section is added as a placeholder.
