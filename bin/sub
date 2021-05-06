@@ -11,5 +11,5 @@ fi
 SUBREPO="${CONTEXT#${WORKSPACE}/}"
 
 pushd ${WORKSPACE} > /dev/null
-  echo git subrepo "$@" ${SUBREPO}
+  git subrepo "$@" ${SUBREPO}
 popd > /dev/null
