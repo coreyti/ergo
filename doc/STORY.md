@@ -23,11 +23,13 @@ git subrepo init src/github.com/coreyti/ergo-api \
 git subrepo push src/github.com/coreyti/ergo-api
 # worked! and I cloned the repo to "play" as a standalone project. so easy!
 
+git subrepo clone git@github.com:coreyti/wip.git src/github.com/coreyti/wip
+# so, so easy!
 ```
 
 
 
 ### References
 
-...
+- Well, there's [`git-subrepo`](https://github.com/ingydotnet/git-subrepo) of course.
 
