@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:coreyti/wip.git
+	branch = master
+	commit = fb0cd22f3cba7e437d3a6eb03a63841be4242b22
+	parent = 3bd4deba4eb696c64486fb04340b0b283557e51c
+	method = merge
+	cmdver = 0.4.3

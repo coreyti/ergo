@@ -1,0 +1,8 @@
+#!/usr/env ruby
+
+puts "loading 'wip'..."
+
+# `wip exec example`
+def example
+  puts "executing 'example'"
+end
