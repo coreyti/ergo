@@ -27,6 +27,13 @@ git subrepo clone git@github.com:coreyti/wip.git src/github.com/coreyti/wip
 # so, so easy!
 ```
 
+### So... easy...
+
+```shell
+$ cd <project>
+$ sub push
+```
+
 
 
 ### References
