@@ -6,7 +6,7 @@
 [subrepo]
 	remote = git@github.com:coreyti/ergo-api.git
 	branch = main
-	commit = 848a2426f528af98e3df26cc214df3a4197f583c
+	commit = c40f22183c8d42cb5fe232d9e1be853e289a8fff
 	method = merge
 	cmdver = 0.4.3
-	parent = 0f35620fe77df38825332b99c48f81d6ebdbef90
+	parent = 7de0e1dcfafa03d8ca2ae5136b555f32eeb71ecf
