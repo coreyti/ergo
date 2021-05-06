@@ -32,4 +32,6 @@ git subrepo clone git@github.com:coreyti/wip.git src/github.com/coreyti/wip
 ### References
 
 - Well, there's [`git-subrepo`](https://github.com/ingydotnet/git-subrepo) of course.
+- https://tldp.org/LDP/abs/html/string-manipulation.html
+- 
 

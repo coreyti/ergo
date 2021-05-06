@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CONTEXT=${PROJECT:-${WORKSPACE}}
+
+if [[ "${CONTEXT}" == "${WORKSPACE}" ]] ; then
+  echo "bailing: not sure what to do with this yet"
+  exit 1
+fi
+
+SUBREPO="${CONTEXT#${WORKSPACE}/}"
+
+pushd ${WORKSPACE} > /dev/null
+  echo git subrepo "$@" ${SUBREPO}
+popd > /dev/null
